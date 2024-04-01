@@ -1,18 +1,17 @@
-import { CreateCompanyDto } from '../dtos/create-company.dto';
 import { Injectable } from '@nestjs/common';
-import { Company } from '../entities/companies.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UsersService } from 'src/users/services/users.service';
 import { Repository } from 'typeorm';
-import { User } from 'src/users/entities/users.entity';
+import { CreateCompanyDto } from '../dtos/create-company.dto';
 import { UpdateCompanyDto } from '../dtos/update-company.dto';
+import { Company } from '../entities/companies.entity';
 
 @Injectable()
 export class CompaniesUseCase {
   constructor(
     @InjectRepository(Company)
     private companyRepository: Repository<Company>,
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    private userRepository: UsersService,
   ) {}
 
   //create company useCase method
@@ -21,7 +20,7 @@ export class CompaniesUseCase {
     user: number,
   ): Promise<Company> {
     const company = this.companyRepository.create(createCompanyDto);
-    company.user = await this.userRepository.findOne({ where: { id: user } });
+    company.user = await this.userRepository.findOne(user);
     return this.companyRepository.save(company);
   }
 
@@ -57,7 +56,7 @@ export class CompaniesUseCase {
     const company = await this.companyRepository.findOne({
       where: { id: companyId },
     });
-    const user = await this.userRepository.findOne({ where: { id: userId } });
+    const user = await this.userRepository.findOne(userId);
     company.user = user;
     return this.companyRepository.save(company);
   }

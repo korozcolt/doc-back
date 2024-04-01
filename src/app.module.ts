@@ -21,7 +21,6 @@ import { getDatabaseConfig } from './config/db.config';
     UsersModule,
     AuthModule,
     CompaniesModule,
-    CompaniesModule,
     DepartmentsModule,
   ],
   controllers: [AppController],
