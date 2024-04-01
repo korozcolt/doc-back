@@ -9,7 +9,6 @@ import {
 import { CompanySettings } from '../interfaces/companySetting.interface';
 import { Department } from 'src/departments/entities/departments.entity';
 import { User } from 'src/users/entities/users.entity';
-import { v4 as uuidv4 } from 'uuid';
 
 @Entity()
 export class Company {
